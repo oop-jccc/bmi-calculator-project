@@ -17,6 +17,6 @@ public class WeightTests
     [Test]
     public void Constructor_NegativeValue_ThrowsException()
     {
-        Assert.Throws<ArgumentException>(() => new Weight(-70, UnitType.Metric));
+        Assert.Throws<ArgumentException>(() => _ = new Weight(-70, UnitType.Metric));
     }
 }

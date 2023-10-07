@@ -17,6 +17,6 @@ public class HeightTests
     [Test]
     public void Constructor_NegativeValue_ThrowsException()
     {
-        Assert.Throws<ArgumentException>(() => new Height(-1.75, UnitType.Metric));
+        Assert.Throws<ArgumentException>(() => _ = new Height(-1.75, UnitType.Metric));
     }
 }
