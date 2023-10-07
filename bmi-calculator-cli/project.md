@@ -46,6 +46,8 @@ Though the instructions suggest starting from scratch, you'll receive starter co
 2. **StandardBMICalculatorStrategy Class**:
     - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Standard, and calculate BMI using the formula `(weight (lbs) / height (in)^2) * 703`.
 
+![BMI Equations](BMI%20Calc.png)
+
 #### Interpreters
 
 1. **BMICategoryInterpreter Class**:
@@ -56,8 +58,6 @@ Though the instructions suggest starting from scratch, you'll receive starter co
 1. **BMICalculator Class**:
     - Dependencies: Hold references to `IBMICalculatorStrategy` and `IBMICategoryInterpreter` through constructor injection.
     - Methods: Define methods to calculate BMI and get the BMI category, utilizing the injected strategy and interpreter.
-
-![BMI Equations](BMI%20Calc.png)
 
 #### Unit Testing
 
