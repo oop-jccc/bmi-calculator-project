@@ -4,13 +4,13 @@ using bmi_calculator_core.Models;
 
 namespace bmi_calculator_core.Strategies;
 
-public class StandardBMICalculatorStrategy : IBMICalculatorStrategy
+public class StandardBMICalculatorStrategy // TODO: Implement the IBMICalculatorStrategy interface.
 {
     public double CalculateBMI(Weight weight, Height height)
     {
         // Ensure the units are standard, otherwise throw an exception
-        if (weight.UnitType != UnitType.Standard || height.UnitType != UnitType.Standard)
-            throw new InvalidOperationException("Both weight and height units must be standard.");
+        // TODO: Implement a check to ensure the units of 'weight' and 'height' are standard.
+        //       - If either 'weight' or 'height' units are not standard, throw a new InvalidOperationException with the message "Both weight and height units must be standard."
 
         var heightInInches = height.Value;
         var weightInLbs = weight.Value;

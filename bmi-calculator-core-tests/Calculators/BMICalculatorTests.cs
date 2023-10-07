@@ -18,7 +18,8 @@ public class CalculatorTests
     {
         _mockStrategy = new Mock<IBMICalculatorStrategy>();
         _mockInterpreter = new Mock<IBMICategoryInterpreter>();
-        _calculator = new BMICalculator(_mockStrategy.Object, _mockInterpreter.Object);
+        // TODO: Uncomment the following line to create an instance of the BMICalculator class.
+        //_calculator = new BMICalculator(_mockStrategy.Object, _mockInterpreter.Object);
     }
 
     [Test]
@@ -26,7 +27,8 @@ public class CalculatorTests
     {
         var weight = new Weight(70, UnitType.Metric);
         var height = new Height(1.75, UnitType.Metric);
-        _calculator.CalculateBMI(weight, height);
+        // TODO: Uncomment the following line to call the CalculateBMI method.
+        //_calculator.CalculateBMI(weight, height);
         _mockStrategy.Verify(s => s.CalculateBMI(weight, height), Times.Once);
     }
 
@@ -34,7 +36,8 @@ public class CalculatorTests
     public void GetBMICategory_ValidInput_CallsInterpreter()
     {
         var bmi = 22.86;
-        _calculator.GetBMICategory(bmi);
+        // TODO: Uncomment the following line to call the GetBMICategory method.
+        //_calculator.GetBMICategory(bmi);
         _mockInterpreter.Verify(i => i.InterpretBMI(bmi), Times.Once);
     }
 }

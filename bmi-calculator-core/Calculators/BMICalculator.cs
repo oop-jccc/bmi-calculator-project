@@ -5,22 +5,13 @@ namespace bmi_calculator_core.Calculators;
 
 public class BMICalculator
 {
-    private readonly IBMICalculatorStrategy _bmiCalculatorStrategy;
-    private readonly IBMICategoryInterpreter _bmiCategoryInterpreter;
+    // TODO: Declare fields for IBMICalculatorStrategy and IBMICategoryInterpreter interfaces
 
-    public BMICalculator(IBMICalculatorStrategy bmiCalculatorStrategy, IBMICategoryInterpreter bmiCategoryInterpreter)
-    {
-        _bmiCalculatorStrategy = bmiCalculatorStrategy;
-        _bmiCategoryInterpreter = bmiCategoryInterpreter;
-    }
+    // TODO: Create a constructor that accepts implementations of the above interfaces and initializes the fields
 
-    public double CalculateBMI(Weight weight, Height height)
-    {
-        return _bmiCalculatorStrategy.CalculateBMI(weight, height);
-    }
+    // TODO: Implement the CalculateBMI method which should use the strategy interface to compute the BMI 
+    //       using the provided Weight and Height objects.
 
-    public string GetBMICategory(double bmi)
-    {
-        return _bmiCategoryInterpreter.InterpretBMI(bmi);
-    }
+    // TODO: Implement the GetBMICategory method which should use the interpreter interface to get a textual 
+    //       interpretation of the provided BMI value.
 }

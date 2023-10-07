@@ -4,15 +4,16 @@ namespace bmi_calculator_core.Models;
 
 public class Height
 {
-    public double Value { get; }
-    public UnitType UnitType { get; }
+    public double Value { get; } // note: this is a read-only property using a getter only
+    // TODO: Declare a property named 'UnitType' of type UnitType with a public getter.
 
     public Height(double value, UnitType unitType)
     {
-        if (value <= 0)
-            throw new ArgumentException("Height value must be greater than zero.", nameof(value));
+        // TODO: Implement validation to ensure 'value' is greater than zero.
+        //       - If 'value' is less than or equal to zero, throw a new ArgumentException with the message "Height value must be greater than zero."
 
-        Value = value;
-        UnitType = unitType;
+        // TODO: Assign 'value' to the 'Value' property.
+
+        // TODO: Assign 'unitType' to the 'UnitType' property.
     }
 }

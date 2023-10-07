@@ -4,18 +4,22 @@ using bmi_calculator_core.Models;
 
 namespace bmi_calculator_core.Strategies;
 
-public class MetricBMICalculatorStrategy : IBMICalculatorStrategy
+public class MetricBMICalculatorStrategy // TODO: Implement the IBMICalculatorStrategy interface.
 {
     public double CalculateBMI(Weight weight, Height height)
     {
         // Ensure the units are metric, otherwise throw an exception
-        if (weight.UnitType != UnitType.Metric || height.UnitType != UnitType.Metric)
-            throw new InvalidOperationException("Both weight and height units must be metric.");
+        // TODO: Implement a check to ensure the units of 'weight' and 'height' are metric.
+        //       - If either 'weight' or 'height' units are not metric, throw a new InvalidOperationException with the message "Both weight and height units must be metric."
 
-        var heightInMeters = height.Value;
-        var weightInKg = weight.Value;
-        var bmi = weightInKg / (heightInMeters * heightInMeters);
+        // TODO: Assign 'height.Value' to a variable named 'heightInMeters'.
 
-        return bmi;
+        // TODO: Assign 'weight.Value' to a variable named 'weightInKg'.
+
+        // TODO: Calculate the BMI using the formula: BMI = weightInKg / (heightInMeters * heightInMeters).
+
+        // TODO: Return the calculated BMI.
+
+        throw new NotImplementedException();
     }
 }
