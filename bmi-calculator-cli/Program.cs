@@ -1,5 +1,11 @@
-﻿using bmi_calculator_core;
+﻿using bmi_calculator_core.Calculators;
+using bmi_calculator_core.Enums;
+using bmi_calculator_core.Interfaces;
+using bmi_calculator_core.Interpreters;
 using bmi_calculator_core.Models;
+using bmi_calculator_core.Strategies;
+
+namespace bmi_calculator_cli;
 
 class Program
 {

@@ -1,6 +1,7 @@
+using bmi_calculator_core.Interfaces;
 using bmi_calculator_core.Models;
 
-namespace bmi_calculator_core;
+namespace bmi_calculator_core.Calculators;
 
 public class BMICalculator
 {

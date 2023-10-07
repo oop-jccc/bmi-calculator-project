@@ -1,4 +1,6 @@
-namespace bmi_calculator_core;
+using bmi_calculator_core.Interfaces;
+
+namespace bmi_calculator_core.Interpreters;
 
 public class BMICategoryInterpreter : IBMICategoryInterpreter
 {

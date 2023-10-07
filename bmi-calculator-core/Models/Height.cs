@@ -1,3 +1,5 @@
+using bmi_calculator_core.Enums;
+
 namespace bmi_calculator_core.Models;
 
 public class Height
