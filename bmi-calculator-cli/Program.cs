@@ -92,18 +92,20 @@ internal static class Program
     {
         var weight = new Weight(weightValue, unitType);
         var height = new Height(heightValue, unitType);
+        
+        // TODO: Uncomment the following lines to create instances of the BMICalculatorStrategy and BMICategoryInterpreter classes.
 
-        IBMICalculatorStrategy bmiCalculatorStrategy = unitType == UnitType.Metric
-            ? new MetricBMICalculatorStrategy()
-            : new StandardBMICalculatorStrategy();
-
-        var bmiCategoryInterpreter = new BMICategoryInterpreter();
-
-        var bmiCalculator = new BMICalculator(bmiCalculatorStrategy, bmiCategoryInterpreter);
-
-        var bmi = bmiCalculator.CalculateBMI(weight, height);
-        var bmiCategory = bmiCalculator.GetBMICategory(bmi);
-
-        Console.WriteLine($"Your BMI is {bmi:F1}. Category: {bmiCategory}");
+        // IBMICalculatorStrategy bmiCalculatorStrategy = unitType == UnitType.Metric
+        //     ? new MetricBMICalculatorStrategy()
+        //     : new StandardBMICalculatorStrategy();
+        //
+        // var bmiCategoryInterpreter = new BMICategoryInterpreter();
+        //
+        // var bmiCalculator = new BMICalculator(bmiCalculatorStrategy, bmiCategoryInterpreter);
+        //
+        // var bmi = bmiCalculator.CalculateBMI(weight, height);
+        // var bmiCategory = bmiCalculator.GetBMICategory(bmi);
+        //
+        // Console.WriteLine($"Your BMI is {bmi:F1}. Category: {bmiCategory}");
     }
 }
