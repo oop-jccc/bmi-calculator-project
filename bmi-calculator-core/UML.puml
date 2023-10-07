@@ -1,0 +1,67 @@
+@startuml
+hide empty members
+
+namespace bmi_calculator_core {
+
+    namespace Calculators {
+        class BMICalculator {
+            + BMICalculator(IBMICalculatorStrategy, IBMICategoryInterpreter)
+            + double CalculateBMI(Weight, Height)
+            + string GetBMICategory(double)
+        }
+    }
+
+    namespace Enums {
+        enum UnitType {
+            Metric
+            Standard
+        }
+    }
+
+    namespace Interfaces {
+        interface IBMICalculatorStrategy {
+            + double CalculateBMI(Weight, Height)
+        }
+        interface IBMICategoryInterpreter {
+            + string InterpretBMI(double)
+        }
+    }
+
+    namespace Interpreters {
+        class BMICategoryInterpreter {
+            + string InterpretBMI(double)
+        }
+    }
+
+    namespace Models {
+        class Height {
+            + double Value { get; }
+            + UnitType UnitType { get; }
+            + Height(double, UnitType)
+        }
+        class Weight {
+            + double Value { get; }
+            + UnitType UnitType { get; }
+            + Weight(double, UnitType)
+        }
+    }
+
+    namespace Strategies {
+        class MetricBMICalculatorStrategy {
+            + double CalculateBMI(Weight, Height)
+        }
+        class StandardBMICalculatorStrategy {
+            + double CalculateBMI(Weight, Height)
+        }
+    }
+}
+
+BMICalculator ..> IBMICalculatorStrategy : uses
+BMICalculator ..> IBMICategoryInterpreter : uses
+MetricBMICalculatorStrategy .up.|> IBMICalculatorStrategy
+StandardBMICalculatorStrategy .up.|> IBMICalculatorStrategy
+BMICategoryInterpreter .up.|> IBMICategoryInterpreter
+Weight -- UnitType : uses
+Height -- UnitType : uses
+
+@enduml
