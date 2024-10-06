@@ -2,5 +2,5 @@ namespace bmi_calculator_core.Interfaces;
 
 public interface IBMICategoryInterpreter
 {
-    string InterpretBMI(double bmi);
+    // TODO: Implement the IBMICategoryInterpreter interface with a method to interpret the BMI value.
 }

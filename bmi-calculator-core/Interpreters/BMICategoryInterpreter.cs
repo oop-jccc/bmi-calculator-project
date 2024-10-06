@@ -1,17 +1,8 @@
-using bmi_calculator_core.Interfaces;
-
 namespace bmi_calculator_core.Interpreters;
 
-public class BMICategoryInterpreter : IBMICategoryInterpreter
+public class BMICategoryInterpreter
 {
-    public string InterpretBMI(double bmi)
-    {
-        // TODO: Implement a switch statement to evaluate the 'bmi' variable.
-        //       - For bmi less than 18.5, return "Underweight".
-        //       - For bmi between 18.5 and 24.9, return "Normal weight".
-        //       - For bmi between 24.9 and 29.9, return "Overweight".
-        //       - For bmi 30 and above, return "Obese".
-
-        throw new NotImplementedException();
-    }
+    // TODO: In BMICategoryInterpreter, implement the IBMICategoryInterpreter interface and
+    // use a switch statement to interpret BMI: return 'Underweight' for BMI < 18.5, 'Normal weight' for 18.5–24.9,
+    // 'Overweight' for 24.9–29.9, and 'Obese' for BMI ≥ 30.
 }

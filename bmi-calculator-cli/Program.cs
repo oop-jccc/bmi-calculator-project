@@ -1,9 +1,5 @@
-﻿using bmi_calculator_core.Calculators;
-using bmi_calculator_core.Enums;
-using bmi_calculator_core.Interfaces;
-using bmi_calculator_core.Interpreters;
+﻿using bmi_calculator_core.Enums;
 using bmi_calculator_core.Models;
-using bmi_calculator_core.Strategies;
 
 namespace bmi_calculator_cli;
 
@@ -92,7 +88,7 @@ internal static class Program
     {
         var weight = new Weight(weightValue, unitType);
         var height = new Height(heightValue, unitType);
-        
+
         // TODO: Uncomment the following lines to create instances of the BMICalculatorStrategy and BMICategoryInterpreter classes.
 
         // IBMICalculatorStrategy bmiCalculatorStrategy = unitType == UnitType.Metric
