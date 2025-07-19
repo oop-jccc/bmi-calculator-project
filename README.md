@@ -8,7 +8,7 @@ In this programming project, you are tasked with developing a Body Mass Index (B
 
 The project is structured into various components to ensure separation of concerns and adherence to SOLID principles. Below is the breakdown of the components and their responsibilities.
 
-![UML.png](..%2Fbmi-calculator-core%2FUML.png)
+![UML.png](bmi-calculator-core/UML.png)
 
 #### Note:
 Though the instructions suggest starting from scratch, you'll receive starter code. Your task is to complete the sections marked with "TODO" comments.
