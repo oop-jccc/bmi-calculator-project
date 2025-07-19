@@ -12,7 +12,7 @@ the computed BMI into Underweight, Normal weight, Overweight, or Obese.
 The project is structured into various components to ensure separation of concerns and adherence to SOLID principles.
 Below is the breakdown of the components and their responsibilities.
 
-![UML.png](..%2Fbmi-calculator-core%2FUML.png)
+![UML.png](bmi-calculator-core/UML.png)
 
 #### Note:
 
@@ -56,7 +56,7 @@ sections marked with "TODO" comments.
     - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Standard, and calculate
       BMI using the formula `(weight (lbs) / height (in)^2) * 703`.
 
-![BMI Equations](BMI%20Calc.png)
+![BMI Equations](bmi-calculator-cli/BMI%20Calc.png)
 
 #### Interpreters
 
