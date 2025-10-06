@@ -1,0 +1,21 @@
+﻿{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bmi-calculator-cli/bin/Debug/net8.0/bmi-calculator-cli.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/bmi-calculator-cli",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

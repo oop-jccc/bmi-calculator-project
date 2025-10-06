@@ -1,78 +1,146 @@
-### BMI Calculator Project Guide
+﻿# bmi-calculator-project
 
-#### Introduction
+[![.NET CI/CD Pipeline](https://github.com/oop-jccc/bmi-calculator-project/actions/workflows/ci.yml/badge.svg)](https://github.com/oop-jccc/bmi-calculator-project/actions/workflows/ci.yml)
 
-In this programming project, you are tasked with developing a Body Mass Index (BMI) Calculator. The primary goal is to practice the SOLID design principles, unit testing, and ensure high code coverage. The BMI Calculator should be able to compute BMI from given height and weight inputs, both in Metric and Standard units. Additionally, it should categorize the computed BMI into Underweight, Normal weight, Overweight, or Obese.
+This repository contains a .NET application with a fully configured development environment for optimal productivity.
 
-#### Project Structure
+## Quick Start
 
-The project is structured into various components to ensure separation of concerns and adherence to SOLID principles. Below is the breakdown of the components and their responsibilities.
+### Option 1: GitHub Codespaces (Recommended)
+The fastest way to get started is using GitHub Codespaces, which provides a fully configured development environment in the cloud.
 
-![UML.png](bmi-calculator-core/UML.png)
+1. Click the **Code** button on this repository
+2. Select **Codespaces** tab
+3. Click **Create codespace on main**
+4. Wait for the environment to initialize (this may take a few minutes)
+5. Once ready, you can immediately start coding with full IntelliSense and debugging support
 
-#### Note:
-Though the instructions suggest starting from scratch, you'll receive starter code. Your task is to complete the sections marked with "TODO" comments.
+### Option 2: Local Development with VS Code
+1. **Prerequisites:**
+   - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+   - [Visual Studio Code](https://code.visualstudio.com/)
+   - [C# Dev Kit extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
 
-#### Models
+2. **Clone and Setup:**
+   ```bash
+   git clone https://github.com/USER/REPO.git
+   cd REPO
+   code .
+   ```
 
-1. **Weight Class**:
-    - Constructor: Accepts a `double` for the weight value and a `UnitType` enumeration for the unit of measurement.
-    - Validation: Ensure the weight value is greater than zero within the constructor, throwing an `ArgumentException` otherwise.
-    - Properties: Create properties to hold the weight value and unit type.
+3. **Restore Dependencies:**
+   ```bash
+   dotnet restore bmi-calculator-cli\bmi-calculator-cli.csproj
+   ```
 
-2. **Height Class**:
-    - Constructor: Accepts a `double` for the height value and a `UnitType` enumeration for the unit of measurement.
-    - Validation: Ensure the height value is greater than zero within the constructor, throwing an `ArgumentException` otherwise.
-    - Properties: Create properties to hold the height value and unit type.
+## Build and Debug
 
-#### Enums
+### Using VS Code Tasks
+This repository includes pre-configured VS Code tasks for common operations:
 
-1. **UnitType Enumeration**:
-    - Define an enumeration named `UnitType` with two values: `Metric` and `Standard`.
+- **Build:** `Ctrl+Shift+P` â†’ "Tasks: Run Task" â†’ "build"
+- **Run:** `Ctrl+Shift+P` â†’ "Tasks: Run Task" â†’ "run"
+- **Clean:** `Ctrl+Shift+P` â†’ "Tasks: Run Task" â†’ "clean"
+- **Watch:** `Ctrl+Shift+P` â†’ "Tasks: Run Task" â†’ "watch" (auto-rebuilds on file changes)
 
-#### Interfaces
+### Using Command Line
+```bash
+# Navigate to the project directory
+cd bmi-calculator-cli
 
-1. **IBMICalculatorStrategy Interface**:
-    - Define a method signature for calculating BMI given `Weight` and `Height` instances.
+# Restore dependencies
+dotnet restore
 
-2. **IBMICategoryInterpreter Interface**:
-    - Define a method signature for interpreting BMI and returning a string description of the BMI category.
+# Build the project
+dotnet build
 
-#### Strategies
+# Run the application
+dotnet run
 
-1. **MetricBMICalculatorStrategy Class**:
-    - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Metric, and calculate BMI using the formula `weight (kg) / height (m)^2`.
+# Clean build artifacts
+dotnet clean
 
-2. **StandardBMICalculatorStrategy Class**:
-    - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Standard, and calculate BMI using the formula `(weight (lbs) / height (in)^2) * 703`.
+# Watch for changes and auto-rebuild
+dotnet watch run
+```
 
-![BMI Equations](BMI%20Calc.png)
+### Debugging in VS Code
+1. Open the project in VS Code
+2. Set breakpoints by clicking in the left margin of the code editor
+3. Press `F5` or go to **Run and Debug** panel
+4. Select ".NET Core Launch (console)" configuration
+5. The debugger will start and stop at your breakpoints
 
-#### Interpreters
+## Project Structure
 
-1. **BMICategoryInterpreter Class**:
-    - Implementation: Implement the `IBMICategoryInterpreter` interface, interpreting the BMI value and returning the respective category as a string.
+```
+bmi-calculator-cli/
+â”œâ”€â”€ bmi-calculator-cli.csproj    # Project configuration
+â”œâ”€â”€ Program.cs                     # Application entry point
+â””â”€â”€ ...                           # Additional source files
+```
 
-#### Calculators
+## Development Environment Features
 
-1. **BMICalculator Class**:
-    - Dependencies: Hold references to `IBMICalculatorStrategy` and `IBMICategoryInterpreter` through constructor injection.
-    - Methods: Define methods to calculate BMI and get the BMI category, utilizing the injected strategy and interpreter.
+### VS Code Configuration
+- **IntelliSense:** Full C# code completion and suggestions
+- **Debugging:** Integrated debugging with breakpoints and variable inspection
+- **Tasks:** Pre-configured build, run, and test tasks
+- **Extensions:** Automatically installed C# development extensions
 
-#### Unit Testing
+### DevContainer/Codespaces Features
+- **High-Performance Environment:** 8 CPU cores, 16GB RAM
+- **Pre-installed Extensions:**
+  - C# Dev Kit with full language support
+  - GitHub Copilot for AI-assisted coding
+  - Visual Assist for enhanced productivity
+  - Better C# syntax highlighting
+  - IL Spy for .NET decompilation
+  - NuGet Gallery integration
+  - Coverage gutters for test coverage
+  - REST Client for API testing
 
-Ensure that you write unit tests to cover all the logic in your models, strategies, interpreters, and calculators. Aim for 100% code coverage to ensure every line of code in your core logic is tested. This will likely involve writing multiple test methods per class to cover all possible scenarios and edge cases.
+### Continuous Integration
+- **Automated Builds:** Every push and pull request triggers automated builds
+- **Multi-job Pipeline:** Build, test, code quality, and security scanning
+- **Artifact Storage:** Build outputs are stored for 30 days
+- **Cross-branch Support:** CI runs on all branches to ensure consistency
 
-#### SOLID Principles Reflection
+## Contributing
 
-Reflect on how your design adheres to each of the SOLID principles:
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and commit: `git commit -m "Add your feature"`
+4. Push to your fork: `git push origin feature/your-feature-name`
+5. Create a Pull Request
 
-- **Single Responsibility Principle**: Each class should have a singular responsibility.
-- **Open/Closed Principle**: Your design should be open for extension but closed for modification.
-- **Liskov Substitution Principle**: Implementations of interfaces should be substitutable without altering the correctness of the program.
-- **Interface Segregation Principle**: Create small, client-specific interfaces to ensure clients only implement methods they need.- **Dependency Inversion Principle**: Depend on abstractions, not on concrete implementations.
+## Code Style
 
-Ensure your final submission is well-organized, with clear separation of concerns, and adheres to the SOLID principles.
+This project follows standard C# coding conventions:
+- PascalCase for public members and types
+- camelCase for private fields and local variables
+- Meaningful names for classes, methods, and variables
+- XML documentation comments for public APIs
 
+## Troubleshooting
 
+### Common Issues
 
+**Build Errors:**
+- Ensure .NET 8.0 SDK is installed
+- Run `dotnet restore` to restore NuGet packages
+- Check that you're in the correct directory
+
+**VS Code Issues:**
+- Install the C# Dev Kit extension
+- Reload VS Code window: `Ctrl+Shift+P` â†’ "Developer: Reload Window"
+- Check that .NET is properly installed: `dotnet --version`
+
+**Codespaces Issues:**
+- Wait for the environment to fully initialize
+- If extensions aren't working, try rebuilding the container
+- Check the terminal for any error messages during setup
+
+---
+
+Happy coding!
