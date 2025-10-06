@@ -4,15 +4,18 @@ namespace damage_calculator_core.Models;
 
 public record DefensePower
 {
-    public double Value { get; init; }
-    public DamageType DamageType { get; init; }
+    private readonly double _value;
 
-    public DefensePower(double value, DamageType damageType)
+    public required double Value
     {
-        if (value <= 0)
-            throw new ArgumentException("Defense power value must be greater than zero.");
-
-        Value = value;
-        DamageType = damageType;
+        get => _value;
+        init
+        {
+            if (value <= 0)
+                throw new ArgumentException("Defense power value must be greater than zero.");
+            _value = value;
+        }
     }
+
+    public required DamageType DamageType { get; init; }
 }

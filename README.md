@@ -1,95 +1,340 @@
-### BMI Calculator Project Guide
+# Damage Calculator Project
 
-#### Introduction
+## Introduction
 
-In this programming project, you are tasked with developing a Body Mass Index (BMI) Calculator. The primary goal is to
-practice the SOLID design principles, unit testing, and ensure high code coverage. The BMI Calculator should be able to
-compute BMI from given height and weight inputs, both in Metric and Standard units. Additionally, it should categorize
-the computed BMI into Underweight, Normal weight, Overweight, or Obese.
+This project implements a **Damage Calculator** system that computes damage dealt in combat scenarios based on attack power and defense power. The primary goals are to practice **SOLID design principles**, implement the **Strategy Pattern**, ensure comprehensive **unit testing**, and achieve high code coverage.
 
-#### Project Structure
+The Damage Calculator supports two damage types:
+- **Physical Damage**: Uses a linear reduction formula
+- **Magical Damage**: Uses a percentage-based reduction formula
 
-The project is structured into various components to ensure separation of concerns and adherence to SOLID principles.
-Below is the breakdown of the components and their responsibilities.
+Additionally, the system categorizes the computed damage into descriptive categories: Miss, Scratch, Hit, Critical, or Devastating.
 
-![UML.png](bmi-calculator-core/UML.png)
+## Project Structure
 
-#### Note:
+The project is structured into various components to ensure separation of concerns and adherence to SOLID principles. Below is the architecture diagram and breakdown of components.
 
-Though the instructions suggest starting from scratch, you'll receive starter code. Your task is to complete the
-sections marked with "TODO" comments.
+## Architecture Diagram
 
-#### Models
+```mermaid
+classDiagram
+    %% Enums
+    class DamageType {
+        <<enumeration>>
+        Physical
+        Magical
+    }
 
-1. **Weight Class**:
-    - Constructor: Accepts a `double` for the weight value and a `UnitType` enumeration for the unit of measurement.
-    - Validation: Ensure the weight value is greater than zero within the constructor, throwing an `ArgumentException`
-      otherwise.
-    - Properties: Create properties to hold the weight value and unit type.
+    %% Models
+    class AttackPower {
+        <<record>>
+        -double _value
+        +required double Value
+        +required DamageType DamageType
+    }
 
-2. **Height Class**:
-    - Constructor: Accepts a `double` for the height value and a `UnitType` enumeration for the unit of measurement.
-    - Validation: Ensure the height value is greater than zero within the constructor, throwing an `ArgumentException`
-      otherwise.
-    - Properties: Create properties to hold the height value and unit type.
+    class DefensePower {
+        <<record>>
+        -double _value
+        +required double Value
+        +required DamageType DamageType
+    }
 
-#### Enums
+    %% Interfaces
+    class IDamageCalculatorStrategy {
+        <<interface>>
+        +CalculateDamage(AttackPower, DefensePower) double
+    }
 
-1. **UnitType Enumeration**:
-    - Define an enumeration named `UnitType` with two values: `Metric` and `Standard`.
+    class IDamageCategoryInterpreter {
+        <<interface>>
+        +InterpretDamage(double) string
+    }
 
-#### Interfaces
+    %% Strategies
+    class PhysicalDamageStrategy {
+        +CalculateDamage(AttackPower, DefensePower) double
+    }
 
-1. **IBMICalculatorStrategy Interface**:
-    - Define a method signature for calculating BMI given `Weight` and `Height` instances.
+    class MagicalDamageStrategy {
+        +CalculateDamage(AttackPower, DefensePower) double
+    }
 
-2. **IBMICategoryInterpreter Interface**:
-    - Define a method signature for interpreting BMI and returning a string description of the BMI category.
+    %% Interpreters
+    class DamageCategoryInterpreter {
+        +InterpretDamage(double) string
+    }
 
-#### Strategies
+    %% Calculator
+    class DamageCalculator {
+        -IDamageCalculatorStrategy _strategy
+        -IDamageCategoryInterpreter _interpreter
+        +DamageCalculator(IDamageCalculatorStrategy, IDamageCategoryInterpreter)
+        +CalculateDamage(AttackPower, DefensePower) double
+        +GetDamageCategory(double) string
+    }
 
-1. **MetricBMICalculatorStrategy Class**:
-    - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Metric, and calculate BMI
-      using the formula `weight (kg) / height (m)^2`.
+    %% Relationships
+    AttackPower --> DamageType : uses
+    DefensePower --> DamageType : uses
+    IDamageCalculatorStrategy <|.. PhysicalDamageStrategy : implements
+    IDamageCalculatorStrategy <|.. MagicalDamageStrategy : implements
+    IDamageCategoryInterpreter <|.. DamageCategoryInterpreter : implements
+    DamageCalculator --> IDamageCalculatorStrategy : depends on
+    DamageCalculator --> IDamageCategoryInterpreter : depends on
+    IDamageCalculatorStrategy --> AttackPower : uses
+    IDamageCalculatorStrategy --> DefensePower : uses
+```
 
-2. **StandardBMICalculatorStrategy Class**:
-    - Implementation: Implement the `IBMICalculatorStrategy` interface, ensuring the units are Standard, and calculate
-      BMI using the formula `(weight (lbs) / height (in)^2) * 703`.
+## Component Details
 
-![BMI Equations](bmi-calculator-cli/BMI%20Calc.png)
+### Models
 
-#### Interpreters
+#### 1. AttackPower Record
 
-1. **BMICategoryInterpreter Class**:
-    - Implementation: Implement the `IBMICategoryInterpreter` interface, interpreting the BMI value and returning the
-      respective category as a string.
+A record type representing attack power in combat.
 
-#### Calculators
+**Properties:**
+- `Value` (required, double): The attack power value with validation in the init accessor
+  - **Validation**: Must be greater than zero, throws `ArgumentException` otherwise
+- `DamageType` (required, DamageType): The type of damage (Physical or Magical)
 
-1. **BMICalculator Class**:
-    - Dependencies: Hold references to `IBMICalculatorStrategy` and `IBMICategoryInterpreter` through constructor
-      injection.
-    - Methods: Define methods to calculate BMI and get the BMI category, utilizing the injected strategy and
-      interpreter.
+**Implementation Details:**
+- Uses a private backing field `_value` for the Value property
+- Validation occurs in the `init` accessor when the property is set
+- Modern C# pattern using `required` keyword for compile-time safety
 
-#### Unit Testing
+**Usage Example:**
+```csharp
+var attackPower = new AttackPower
+{
+    Value = 100.0,
+    DamageType = DamageType.Physical
+};
+```
 
-Ensure that you write unit tests to cover all the logic in your models, strategies, interpreters, and calculators. Aim
-for 100% code coverage to ensure every line of code in your core logic is tested. This will likely involve writing
-multiple test methods per class to cover all possible scenarios and edge cases.
+#### 2. DefensePower Record
 
-#### SOLID Principles Reflection
+A record type representing defensive power in combat.
 
-Reflect on how your design adheres to each of the SOLID principles:
+**Properties:**
+- `Value` (required, double): The defense power value with validation in the init accessor
+  - **Validation**: Must be greater than zero, throws `ArgumentException` otherwise
+- `DamageType` (required, DamageType): The type of defense (Physical or Magical)
 
-- **Single Responsibility Principle**: Each class should have a singular responsibility.
-- **Open/Closed Principle**: Your design should be open for extension but closed for modification.
-- **Liskov Substitution Principle**: Implementations of interfaces should be substitutable without altering the
-  correctness of the program.
-- **Interface Segregation Principle**: Create small, client-specific interfaces to ensure clients only implement methods
-  they need.- **Dependency Inversion Principle**: Depend on abstractions, not on concrete implementations.
+**Implementation Details:**
+- Uses a private backing field `_value` for the Value property
+- Validation occurs in the `init` accessor when the property is set
+- Modern C# pattern using `required` keyword for compile-time safety
 
-Ensure your final submission is well-organized, with clear separation of concerns, and adheres to the SOLID principles.
+**Usage Example:**
+```csharp
+var defensePower = new DefensePower
+{
+    Value = 50.0,
+    DamageType = DamageType.Magical
+};
+```
+
+### Enums
+
+#### DamageType Enumeration
+
+Defines the types of damage in the system.
+
+**Values:**
+- `Physical`: Represents physical damage
+- `Magical`: Represents magical damage
+
+### Interfaces
+
+#### 1. IDamageCalculatorStrategy Interface
+
+Defines the contract for damage calculation strategies.
+
+**Method:**
+- `double CalculateDamage(AttackPower attackPower, DefensePower defensePower)`: Calculates damage based on attack and defense power
+
+#### 2. IDamageCategoryInterpreter Interface
+
+Defines the contract for interpreting damage values into categories.
+
+**Method:**
+- `string InterpretDamage(double damage)`: Returns a category description for the given damage value
+
+### Strategies
+
+#### 1. PhysicalDamageStrategy Class
+
+Implements physical damage calculation using a linear reduction formula.
+
+**Formula:** `Damage = Attack - (Defense × 0.5)`
+
+**Validation:**
+- Both AttackPower and DefensePower must have `DamageType.Physical`
+- Throws `InvalidOperationException` if damage types don't match or aren't Physical
+
+**Example:**
+```csharp
+var strategy = new PhysicalDamageStrategy();
+var attack = new AttackPower { Value = 100, DamageType = DamageType.Physical };
+var defense = new DefensePower { Value = 60, DamageType = DamageType.Physical };
+var damage = strategy.CalculateDamage(attack, defense); // Returns 70.0
+```
+
+#### 2. MagicalDamageStrategy Class
+
+Implements magical damage calculation using a percentage-based reduction formula.
+
+**Formula:** `Damage = Attack × (100 / (100 + Defense))`
+
+**Validation:**
+- Both AttackPower and DefensePower must have `DamageType.Magical`
+- Throws `InvalidOperationException` if damage types don't match or aren't Magical
+
+**Example:**
+```csharp
+var strategy = new MagicalDamageStrategy();
+var attack = new AttackPower { Value = 100, DamageType = DamageType.Magical };
+var defense = new DefensePower { Value = 50, DamageType = DamageType.Magical };
+var damage = strategy.CalculateDamage(attack, defense); // Returns 66.67
+```
+
+### Interpreters
+
+#### DamageCategoryInterpreter Class
+
+Interprets damage values into descriptive categories.
+
+**Categories:**
+- **Miss**: damage ≤ 0
+- **Scratch**: 0 < damage < 10
+- **Hit**: 10 ≤ damage < 50
+- **Critical**: 50 ≤ damage < 100
+- **Devastating**: damage ≥ 100
+
+**Example:**
+```csharp
+var interpreter = new DamageCategoryInterpreter();
+var category = interpreter.InterpretDamage(75.5); // Returns "Critical"
+```
+
+### Calculators
+
+#### DamageCalculator Class
+
+The main calculator class that orchestrates damage calculation and categorization.
+
+**Dependencies:**
+- `IDamageCalculatorStrategy`: Injected strategy for calculating damage
+- `IDamageCategoryInterpreter`: Injected interpreter for categorizing damage
+
+**Constructor:**
+```csharp
+public DamageCalculator(IDamageCalculatorStrategy strategy, IDamageCategoryInterpreter interpreter)
+```
+
+**Methods:**
+- `double CalculateDamage(AttackPower attackPower, DefensePower defensePower)`: Delegates to the strategy to calculate damage
+- `string GetDamageCategory(double damage)`: Delegates to the interpreter to get damage category
+
+**Usage Example:**
+```csharp
+// Create attack and defense
+var attack = new AttackPower { Value = 100, DamageType = DamageType.Physical };
+var defense = new DefensePower { Value = 60, DamageType = DamageType.Physical };
+
+// Create strategy and interpreter
+IDamageCalculatorStrategy strategy = new PhysicalDamageStrategy();
+IDamageCategoryInterpreter interpreter = new DamageCategoryInterpreter();
+
+// Create calculator with dependency injection
+var calculator = new DamageCalculator(strategy, interpreter);
+
+// Calculate damage and get category
+var damage = calculator.CalculateDamage(attack, defense); // 70.0
+var category = calculator.GetDamageCategory(damage); // "Critical"
+```
+
+## Unit Testing
+
+The project includes comprehensive unit tests covering all components:
+
+- **Model Tests**: Validate property initialization and validation rules
+- **Strategy Tests**: Verify damage calculation formulas and error handling
+- **Interpreter Tests**: Confirm correct categorization across all thresholds
+- **Calculator Tests**: Ensure proper delegation to strategies and interpreters using mocks
+
+**Test Coverage Goal**: 100% code coverage to ensure every line of code is tested.
+
+## SOLID Principles
+
+This project demonstrates adherence to SOLID principles:
+
+### Single Responsibility Principle (SRP)
+Each class has a single, well-defined responsibility:
+- `AttackPower` and `DefensePower`: Represent combat attributes with validation
+- `PhysicalDamageStrategy` and `MagicalDamageStrategy`: Calculate damage using specific formulas
+- `DamageCategoryInterpreter`: Categorizes damage values
+- `DamageCalculator`: Orchestrates calculation and interpretation
+
+### Open/Closed Principle (OCP)
+The design is open for extension but closed for modification:
+- New damage calculation strategies can be added by implementing `IDamageCalculatorStrategy`
+- New interpretation logic can be added by implementing `IDamageCategoryInterpreter`
+- No existing code needs modification to add new strategies
+
+
+### Liskov Substitution Principle (LSP)
+Any implementation of `IDamageCalculatorStrategy` or `IDamageCategoryInterpreter` can be substituted without breaking the system:
+- `PhysicalDamageStrategy` and `MagicalDamageStrategy` are interchangeable
+- The `DamageCalculator` works correctly with any valid strategy/interpreter implementation
+
+### Interface Segregation Principle (ISP)
+Interfaces are small and focused:
+- `IDamageCalculatorStrategy`: Single method for damage calculation
+- `IDamageCategoryInterpreter`: Single method for damage interpretation
+- Clients only depend on the methods they actually use
+
+### Dependency Inversion Principle (DIP)
+High-level modules depend on abstractions, not concrete implementations:
+- `DamageCalculator` depends on `IDamageCalculatorStrategy` and `IDamageCategoryInterpreter` interfaces
+- Concrete strategies and interpreters are injected via constructor
+- This enables easy testing with mocks and flexible runtime behavior
+
+## Project Files
+
+```
+damage-calculator-core/
+├── Calculators/
+│   └── DamageCalculator.cs
+├── Enums/
+│   └── DamageType.cs
+├── Interfaces/
+│   ├── IDamageCalculatorStrategy.cs
+│   └── IDamageCategoryInterpreter.cs
+├── Interpreters/
+│   └── DamageCategoryInterpreter.cs
+├── Models/
+│   ├── AttackPower.cs
+│   └── DefensePower.cs
+└── Strategies/
+    ├── PhysicalDamageStrategy.cs
+    └── MagicalDamageStrategy.cs
+
+damage-calculator-core-tests/
+├── Calculators/
+│   └── DamageCalculatorTests.cs
+├── Interpreters/
+│   └── DamageCategoryInterpreterTests.cs
+├── Models/
+│   ├── AttackPowerTests.cs
+│   └── DefensePowerTests.cs
+└── Strategies/
+    ├── PhysicalDamageStrategyTests.cs
+    └── MagicalDamageStrategyTests.cs
+```
+
 
 
 
